@@ -146,12 +146,6 @@ $$('.card__moon').forEach(m => {
   const dayEl = $('#calcDay'), ofEl = $('#calcOf'), stageEl = $('#calcStage'), cell = $('#cell'), wrap = $('.calc__ringwrap');
   const svg = $('#calcRing');
   const daysFor = a => a <= 25 ? 28 : Math.round(28 + (a - 25) * .6);
-  const STAGES = [
-    'Neixen cèl·lules noves a la capa més profunda de la pell.',
-    'Les cèl·lules noves pugen cap a la superfície.',
-    "S'aplanen i es carreguen de queratina: fan de barrera.",
-    'Arriben a la superfície i es desprenen. Ja tens pell nova.'
-  ];
   let ring, N = 28, X = 1, handle, handleLit, lastStage = -1, auto;
   function build() {
     ring = makeRing(svg, { n: N, R: 400, dotR: Math.min(19, (Math.PI * 2 * 400 / N) * .3), bigR: 230, phaseOf: () => .5 });
@@ -164,35 +158,36 @@ $$('.card__moon').forEach(m => {
   }
   function setX(x) {
     X = Math.max(1, Math.min(N, x));
-    const t = (X - 1) / (N - 1);
+    const p = (X - 1) / (N - 1);
     const a = ((X - 1) / N) * Math.PI * 2 - Math.PI / 2;
     handle.setAttribute('transform', `translate(${(Math.cos(a) * 400).toFixed(1)} ${(Math.sin(a) * 400).toFixed(1)})`);
-    handleLit.setAttribute('d', phasePath(.5 * t + .02, 29));
-    ring.bigLit.setAttribute('d', phasePath(.5 * t, ring.bigR));
+    handleLit.setAttribute('d', phasePath(.5 * p + .02, 29));
+    ring.bigLit.setAttribute('d', phasePath(.5 * p, ring.bigR));
     ring.setProg((X - 1) / N);
     const xi = Math.round(X);
     ring.dots.forEach((o, i) => { o.g.style.opacity = i < xi ? 1 : .2; });
-    dayEl.textContent = xi; ofEl.textContent = 'de ' + N;
-    wrap.setAttribute('aria-valuenow', xi); wrap.setAttribute('aria-valuetext', `Dia ${xi} de ${N}`);
-    const s = t < .25 ? 0 : t < .5 ? 1 : t < .8 ? 2 : 3;
-    if (s !== lastStage) { lastStage = s; stageEl.textContent = STAGES[s]; gsap.fromTo(stageEl, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }); }
-    const H = cell.parentElement.clientHeight - 28, flat = gsap.utils.clamp(0, 1, (t - .55) / .45);
-    cell.style.transform = `translateY(${-t * H}px) scale(${1 + flat * .9}, ${1 - flat * .55})`;
-    cell.style.opacity = t > .94 ? 1 - (t - .94) / .06 * .7 : 1;
+    dayEl.textContent = xi; ofEl.textContent = t('c.of', { n: N });
+    wrap.setAttribute('aria-valuenow', xi); wrap.setAttribute('aria-valuetext', t('c.val', { x: xi, n: N }));
+    const s = p < .25 ? 0 : p < .5 ? 1 : p < .8 ? 2 : 3;
+    if (s !== lastStage) { lastStage = s; stageEl.textContent = t('c.s' + s); gsap.fromTo(stageEl, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }); }
+    const H = cell.parentElement.clientHeight - 28, flat = gsap.utils.clamp(0, 1, (p - .55) / .45);
+    cell.style.transform = `translateY(${-p * H}px) scale(${1 + flat * .9}, ${1 - flat * .55})`;
+    cell.style.opacity = p > .94 ? 1 - (p - .94) / .06 * .7 : 1;
   }
   function setAge(a) {
     const n = daysFor(a);
     ageOut.textContent = a;
     age.style.setProperty('--fill', ((a - age.min) / (age.max - age.min) * 100) + '%');
-    res.innerHTML = `Als ${a} anys, la teva pell es renova cada <b>${n} dies</b>, aproximadament.`;
-    cta.href = 'https://wa.me/34635857503?text=' + encodeURIComponent(`Hola Centre Únic, tinc ${a} anys i voldria reservar un diagnòstic de pell.`);
+    res.innerHTML = t('c.res', { a, n });
+    cta.href = 'https://wa.me/34635857503?text=' + encodeURIComponent(t('c.msg', { a }));
     if (n !== N || !ring) { const keep = ring ? (X - 1) / (N - 1) : 0; N = n; build(); setX(1 + keep * (N - 1)); }
   }
   setAge(+age.value);
   age.addEventListener('input', () => { auto && auto.kill(); setAge(+age.value); });
+  document.addEventListener('langchange', () => { wrap.setAttribute('aria-label', t('c.slider')); setAge(+age.value); lastStage = -1; setX(X); });
 
   // arrossegar la lluna per l'anell
-  wrap.setAttribute('role', 'slider'); wrap.setAttribute('tabindex', '0'); wrap.setAttribute('aria-label', 'Dia del cicle');
+  wrap.setAttribute('role', 'slider'); wrap.setAttribute('tabindex', '0'); wrap.setAttribute('aria-label', t('c.slider'));
   wrap.setAttribute('aria-valuemin', '1');
   const fromEvent = e => {
     const r = svg.getBoundingClientRect();
@@ -224,23 +219,28 @@ $$('.card__moon').forEach(m => {
 /* ---------- horari: avui i obert ara ---------- */
 (function hours() {
   const H = { 2: [[9, 13], [15, 20]], 3: [[9, 13], [15, 20]], 4: [[9, 13], [15, 20]], 5: [[9, 13], [15, 20]], 6: [[9, 13]] };
-  const NAMES = ['diumenge', 'dilluns', 'dimarts', 'dimecres', 'dijous', 'divendres', 'dissabte'];
   const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Madrid', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date());
-  const get = t => parts.find(p => p.type === t).value;
+  const get = k => parts.find(p => p.type === k).value;
   const wd = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(get('weekday'));
   const now = +get('hour') + +get('minute') / 60;
-  const row = $(`#hours [data-d="${wd}"]`); row && row.classList.add('today');
-  const status = $('#status');
-  const open = (H[wd] || []).find(([a, b]) => now >= a && now < b);
-  let txt;
-  if (open) txt = `Obert ara · tanca a les ${open[1]}:00`;
-  else {
-    const later = (H[wd] || []).find(([a]) => now < a);
-    if (later) txt = `Tancat ara · obre avui a les ${later[0]}:00`;
-    else for (let k = 1; k < 8; k++) { const d = (wd + k) % 7; if (H[d]) { txt = `Tancat ara · obre ${k === 1 ? 'demà' : NAMES[d]} a les ${H[d][0][0]}:00`; break; } }
+  const day = d => { const n = t('d' + d); return I18N.lang === 'en' ? n : n.toLowerCase(); };
+  function render() {
+    const row = $(`#hours [data-d="${wd}"]`);
+    if (row) { row.classList.add('today'); $('dt', row).innerHTML = `${t('d' + wd)} <span class="tday">· ${t('today')}</span>`; }
+    const open = (H[wd] || []).find(([a, b]) => now >= a && now < b);
+    let txt;
+    if (open) txt = t('st.open', { h: open[1] });
+    else {
+      const later = (H[wd] || []).find(([a]) => now < a);
+      if (later) txt = t('st.later', { h: later[0] });
+      else for (let k = 1; k < 8; k++) { const d = (wd + k) % 7; if (H[d]) { txt = t('st.next', { d: k === 1 ? t('st.tomorrow') : t('st.pre') + day(d), h: H[d][0][0] }); break; } }
+    }
+    const status = $('#status');
+    status.innerHTML = `<i></i>${txt}`;
+    status.classList.toggle('open', !!open);
   }
-  status.innerHTML = `<i></i>${txt}`;
-  status.classList.toggle('open', !!open);
+  render();
+  document.addEventListener('langchange', render);
 })();
 
 /* ---------- entrades ---------- */
@@ -251,3 +251,4 @@ if (!reduce) {
   }));
 }
 document.fonts && document.fonts.ready.then(() => ScrollTrigger.refresh());
+document.addEventListener('langchange', () => requestAnimationFrame(() => ScrollTrigger.refresh()));
