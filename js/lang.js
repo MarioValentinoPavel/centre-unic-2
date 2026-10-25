@@ -31,6 +31,7 @@ window.DICT = {
     'a10': "Osteopatia clínica de l'ATM", 'a10d': "Mandíbula, bruxisme, tensió i dolor facial tractats des de l'osteopatia clínica.",
     'a11': 'Àrea mèdica', 'a11d': 'Medicina estètica amb criteri mèdic dins el mateix centre.',
     'cta.h': 'No saps per on començar?', 'cta.p': "Comencem per l'estudi de la teva pell. Després t'expliquem el pla.", 'cta.b': "Reserva l'estudi",
+    'more': 'Més informació', 'dlg.close': 'Tancar', 'dlg.wa': 'Pregunta per WhatsApp', 'dlg.msg': 'Hola Centre Únic, voldria més informació sobre: {t}',
     'o.h': 'Estètica oncològica', 'o.big': 'Quan la pell passa per un moment difícil, hi som.',
     'o.p': "La quimioteràpia i la radioteràpia canvien la pell. La preparem abans, la cuidem durant el tractament i l'ajudem a recuperar-se després, amb productes sense components irritants i, sobretot, amb temps i escolta.",
     't.h': 'Montse Gayete i equip', 't.big': 'Més de 20 anys cuidant la pell de Blanes.',
@@ -57,7 +58,7 @@ window.DICT = {
     'alt.cabina': 'Montse Gayete a la cabina de Centre Únic', 'alt.facial': 'Tractament facial a cabina', 'alt.prod': 'Montse amb cosmètica de The Natural One',
     'alt.mans': 'Mans cuidades sobre una butaca del centre', 'alt.onco': "Tractament d'estètica oncològica a Centre Únic", 'alt.equip': "L'equip de Centre Únic",
     'foot': 'Centre Únic · Centre fisiològic de la pell · Blanes',
-    'l.avis': 'Avís legal', 'l.priv': 'Privacitat', 'l.cook': 'Cookies'
+    'l.avis': 'Avís legal', 'l.priv': 'Privacitat', 'l.cook': 'Cookies', 'l.cfg': 'Configurar cookies'
   },
   es: {
     'meta.title': 'Centre Únic · Tu piel se renueva cada 28 días · Blanes',
@@ -90,6 +91,7 @@ window.DICT = {
     'a10': 'Osteopatía clínica de la ATM', 'a10d': 'Mandíbula, bruxismo, tensión y dolor facial tratados desde la osteopatía clínica.',
     'a11': 'Área médica', 'a11d': 'Medicina estética con criterio médico dentro del mismo centro.',
     'cta.h': '¿No sabes por dónde empezar?', 'cta.p': 'Empezamos por el estudio de tu piel. Después te explicamos el plan.', 'cta.b': 'Reserva el estudio',
+    'more': 'Más información', 'dlg.close': 'Cerrar', 'dlg.wa': 'Pregunta por WhatsApp', 'dlg.msg': 'Hola Centre Únic, quisiera más información sobre: {t}',
     'o.h': 'Estética oncológica', 'o.big': 'Cuando la piel pasa por un momento difícil, estamos a tu lado.',
     'o.p': 'La quimioterapia y la radioterapia cambian la piel. La preparamos antes, la cuidamos durante el tratamiento y la ayudamos a recuperarse después, con productos sin componentes irritantes y, sobre todo, con tiempo y escucha.',
     't.h': 'Montse Gayete y equipo', 't.big': 'Más de 20 años cuidando la piel de Blanes.',
@@ -116,7 +118,7 @@ window.DICT = {
     'alt.cabina': 'Montse Gayete en la cabina de Centre Únic', 'alt.facial': 'Tratamiento facial en cabina', 'alt.prod': 'Montse con cosmética de The Natural One',
     'alt.mans': 'Manos cuidadas sobre una butaca del centro', 'alt.onco': 'Tratamiento de estética oncológica en Centre Únic', 'alt.equip': 'El equipo de Centre Únic',
     'foot': 'Centre Únic · Centro fisiológico de la piel · Blanes',
-    'l.avis': 'Aviso legal', 'l.priv': 'Privacidad', 'l.cook': 'Cookies'
+    'l.avis': 'Aviso legal', 'l.priv': 'Privacidad', 'l.cook': 'Cookies', 'l.cfg': 'Configurar cookies'
   },
   en: {
     'meta.title': 'Centre Únic · Your skin renews every 28 days · Blanes',
@@ -149,6 +151,7 @@ window.DICT = {
     'a10': 'Clinical TMJ osteopathy', 'a10d': 'Jaw tension, teeth grinding and facial pain treated with clinical osteopathy.',
     'a11': 'Medical area', 'a11d': 'Aesthetic medicine with medical oversight, in the same centre.',
     'cta.h': 'Not sure where to start?', 'cta.p': "We start with a study of your skin. Then we'll explain the plan.", 'cta.b': 'Book your skin study',
+    'more': 'More information', 'dlg.close': 'Close', 'dlg.wa': 'Ask on WhatsApp', 'dlg.msg': "Hello Centre Únic, I'd like more information about: {t}",
     'o.h': 'Oncology aesthetics', 'o.big': 'When your skin goes through a hard time, we are here.',
     'o.p': 'Chemotherapy and radiotherapy change the skin. We prepare it beforehand, care for it during treatment and help it recover afterwards, with irritant-free products and, above all, time and attention.',
     't.h': 'Montse Gayete and team', 't.big': 'Over 20 years caring for skin in Blanes.',
@@ -175,6 +178,6 @@ window.DICT = {
     'alt.cabina': 'Montse Gayete in a Centre Únic treatment room', 'alt.facial': 'Facial treatment in the treatment room', 'alt.prod': 'Montse with The Natural One skincare',
     'alt.mans': "Cared-for hands on one of the centre's armchairs", 'alt.onco': 'Oncology aesthetics treatment at Centre Únic', 'alt.equip': 'The Centre Únic team',
     'foot': 'Centre Únic · Skin physiology centre · Blanes',
-    'l.avis': 'Legal notice', 'l.priv': 'Privacy', 'l.cook': 'Cookies'
+    'l.avis': 'Legal notice', 'l.priv': 'Privacy', 'l.cook': 'Cookies', 'l.cfg': 'Cookie settings'
   }
 };

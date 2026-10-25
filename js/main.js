@@ -140,6 +140,29 @@ $$('.card__moon').forEach(m => {
   }
 });
 
+/* ---------- fitxa completa de cada tractament ---------- */
+(function details() {
+  const dlg = $('#tdlg'); if (!dlg) return;
+  const g = $('#tdlgG'), h = $('#tdlgH'), b = $('#tdlgB'), wa = $('#tdlgWa');
+  let cur = 0, opener;
+  function fill() {
+    if (!cur) return;
+    const grp = $('.card__n span', $(`[data-x="${cur}"]`).closest('.card'));
+    g.textContent = grp ? grp.textContent : '';
+    h.textContent = t('a' + cur);
+    b.innerHTML = t('x' + cur);
+    wa.href = 'https://wa.me/34635857503?text=' + encodeURIComponent(t('dlg.msg', { t: t('a' + cur) }));
+  }
+  $$('.card__more').forEach(btn => btn.addEventListener('click', () => { cur = +btn.dataset.x; opener = btn; fill(); dlg.showModal(); dlg.scrollTop = 0; }));
+  $('.tdlg__x').addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', e => { // clic fora de la finestra
+    const r = dlg.getBoundingClientRect();
+    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dlg.close();
+  });
+  dlg.addEventListener('close', () => opener && opener.focus());
+  document.addEventListener('langchange', fill);
+})();
+
 /* ---------- calculadora del cicle ---------- */
 (function calc() {
   const age = $('#age'), ageOut = $('#ageOut'), res = $('#calcRes'), cta = $('#calcCta');
