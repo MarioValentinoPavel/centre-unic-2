@@ -179,6 +179,7 @@ $$('.card__moon').forEach(m => {
     ageOut.textContent = a;
     age.style.setProperty('--fill', ((a - age.min) / (age.max - age.min) * 100) + '%');
     res.innerHTML = t('c.res', { a, n });
+    $('#calcWhy').textContent = t('c.why', { w: Math.round(n / 7) });
     cta.href = 'https://wa.me/34635857503?text=' + encodeURIComponent(t('c.msg', { a }));
     if (n !== N || !ring) { const keep = ring ? (X - 1) / (N - 1) : 0; N = n; build(); setX(1 + keep * (N - 1)); }
   }
@@ -245,7 +246,7 @@ $$('.card__moon').forEach(m => {
 
 /* ---------- entrades ---------- */
 if (!reduce) {
-  const groups = ['.treat .sec-head > *', '.card', '.onco__fig', '.onco__text > *', '.team__pics img', '.team__text > *', '.calc .sec-head > *', '.calc__ctl > *', '.voices h2', '.voices__score', '.voices blockquote', '.visit__main > *', '.hours div'];
+  const groups = ['.trust__in > *', '.treat .sec-head > *', '.card', '.onco__fig', '.onco__text > *', '.team__pics img', '.team__text > *', '.calc .sec-head > *', '.calc__ctl > *', '.voices h2', '.voices__score', '.voices blockquote', '.visit__main > *', '.hours div'];
   groups.forEach(sel => $$(sel).forEach((n, i) => {
     gsap.from(n, { y: 36, opacity: 0, duration: 1.1, ease: 'expo.out', delay: (i % 4) * .06, clearProps: 'transform,opacity', scrollTrigger: { trigger: n, start: 'top 90%', toggleActions: 'play none none none' } });
   }));
